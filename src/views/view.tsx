@@ -1,4 +1,37 @@
-export default class NotesView {
+import React from "react";
+import type { note, notes } from "@/types/types";
+interface NotesViewProps {
+  handlers: {
+    onNoteAdd: Function
+  }
+  notes: notes
+  activeNote?: note
+}
+export default function NotesView({ handlers: {
+  onNoteAdd
+}, notes, activeNote }: NotesViewProps) {
+  console.log(notes)
+  console.log(activeNote)
+  return (
+    <div>
+      <div className="notes__sidebar">
+        <button className="notes__add" type="button" onClick={
+          () => onNoteAdd()
+        }>添加新的笔记 📒</button>
+        <div className="notes__list"></div>
+      </div>
+      {
+        notes.length > 0 ? [] : <div className="notes__preview">
+          <input className="notes__title" type="text" placeholder="新笔记..." />
+          <textarea className="notes__body" defaultValue="编辑笔记..."></textarea>
+        </div>
+      }
+
+    </div>
+  );
+}
+
+{/* export default class NotesView {
   constructor(
     root,
     { onNoteSelect, onNoteAdd, onNoteEdit, onNoteDelete } = {}
@@ -9,19 +42,12 @@ export default class NotesView {
     this.onNoteEdit = onNoteEdit;
     this.onNoteDelete = onNoteDelete;
     this.root.innerHTML = `
-          <div class="notes__sidebar">
-              <button class="notes__add" type="button">添加新的笔记 📒</button>
-              <div class="notes__list"></div>
-          </div>
-          <div class="notes__preview">
-              <input class="notes__title" type="text" placeholder="新笔记...">
-              <textarea class="notes__body">编辑笔记...</textarea>
-          </div>
+         
       `;
 
-    const btnAddNote = this.root.querySelector(".notes__add");
-    const inpTitle = this.root.querySelector(".notes__title");
-    const inpBody = this.root.querySelector(".notes__body");
+    const btnAddNote = root.querySelector(".notes__add");
+    const inpTitle = root.querySelector(".notes__title");
+    const inpBody = root.querySelector(".notes__body");
 
     btnAddNote.addEventListener("click", () => {
       this.onNoteAdd();
@@ -40,7 +66,7 @@ export default class NotesView {
   }
 
   _createListItemHTML(id, title, body, updated) {
-    const MAX_BODY_LENGTH = 60;
+
 
     return `
           <div class="notes__list-item" data-note-id="${id}">
@@ -51,9 +77,9 @@ export default class NotesView {
               </div>
               <div class="notes__small-updated">
                   ${updated.toLocaleString(undefined, {
-                    dateStyle: "full",
-                    timeStyle: "short",
-                  })}
+      dateStyle: "full",
+      timeStyle: "short",
+    })}
               </div>
           </div>
       `;
@@ -112,4 +138,4 @@ export default class NotesView {
       ? "visible"
       : "hidden";
   }
-}
+} */}
