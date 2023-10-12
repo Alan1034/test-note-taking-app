@@ -30,12 +30,12 @@ export default function NotesView({ handlers, notes, activeNote }: NotesViewProp
         <button className="notes__add" type="button" onClick={
           () => {
             // 1、新建一个 实例
-            let el = new ExcelUtils('采购-拣货单')
+            let el = new ExcelUtils('我的笔记1')
             // 2、调用实例函数，向实例添加表和数据
             const notes = NotesAPI.getAllNotes();
 
             const data: note[] = [...notes]
-            el.addJsonToSheet('采购-拣货单', data)
+            el.addJsonToSheet('我的笔记1', data)
             // 3、调用导出函数
             //  exportExcel()函数为异步调用，可用 el.exportExcel().then(res => {}).catch(err => {})
             el.exportExcel()
