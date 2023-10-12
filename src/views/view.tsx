@@ -1,7 +1,7 @@
 /*
  * @Author: 陈德立*******419287484@qq.com
  * @Date: 2023-10-11 22:58:57
- * @LastEditTime: 2023-10-13 00:36:43
+ * @LastEditTime: 2023-10-13 02:04:25
  * @LastEditors: 陈德立*******419287484@qq.com
  * @Github: https://github.com/Alan1034
  * @Description: 
@@ -33,8 +33,8 @@ export default function NotesView({ handlers, notes, activeNote }: NotesViewProp
             let el = new ExcelUtils('采购-拣货单')
             // 2、调用实例函数，向实例添加表和数据
             const notes = NotesAPI.getAllNotes();
-            console.log(notes)
-            const data: any[] = [...notes]
+
+            const data: note[] = [...notes]
             el.addJsonToSheet('采购-拣货单', data)
             // 3、调用导出函数
             //  exportExcel()函数为异步调用，可用 el.exportExcel().then(res => {}).catch(err => {})
