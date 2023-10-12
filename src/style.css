@@ -6,7 +6,12 @@
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  height: 0;
+  line-height: 0;
 }
 
 html,
@@ -24,13 +29,7 @@ body {
   font-family: sans-serif;
 }
 
-.notes__sidebar {
-  border-right: 2px solid #dddddd;
-  flex-shrink: 0;
-  overflow-y: auto;
-  padding: 1em;
-  width: 300px;
-}
+
 
 .notes__add {
   background: #009578;
@@ -49,12 +48,6 @@ body {
   background: #00af8c;
 }
 
-.notes__list-item {
-  cursor: pointer;
-  border: 2px dotted;
-  margin: 2px;
-  border-radius: 10px;
-}
 
 .notes__list-item--selected {
   background: #eeeeee;
@@ -63,18 +56,6 @@ body {
   border-radius: 10px;
 }
 
-.notes__small-title,
-.notes__small-updated {
-  padding: 10px;
-}
-
-.notes__small-title {
-  font-size: 1.2em;
-}
-
-.notes__small-body {
-  padding: 0 10px;
-}
 
 .notes__small-updated {
   color: #aaaaaa;

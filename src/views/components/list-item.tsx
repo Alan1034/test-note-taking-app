@@ -1,12 +1,11 @@
 import React, { useRef, useState } from "react";
 import type { note, handlers, title, updated, body } from "@/types/types";
-
+import "./list-item.less"
 interface NotesItemProps {
   handlers: handlers
   note: note
   active?: Boolean
 }
-const MAX_BODY_LENGTH = 60;
 export default function NotesItem({
   note, handlers, active
 }: NotesItemProps) {
@@ -51,10 +50,11 @@ export default function NotesItem({
   }
   const previewNote = () => {
     return <div>
-      <div className="notes__small-title">{title}</div>
+      <div className="notes__small-title">
+        {title}
+      </div>
       <div className="notes__small-body">
-        {body.substring(0, MAX_BODY_LENGTH)}
-        {body.length > MAX_BODY_LENGTH ? "..." : ""}
+        {body}
       </div>
       {updated ? <div className="notes__small-updated">
         {updated.toLocaleString(undefined, {

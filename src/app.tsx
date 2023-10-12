@@ -30,7 +30,6 @@ const App: React.FC = () => {
   }
 
   const _setActiveNote = (note: note) => {
-    console.log("setActiveNote")
     setActiveNote(note);
     // this.view.updateActiveNote(note);
   }

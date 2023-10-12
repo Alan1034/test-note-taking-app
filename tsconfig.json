@@ -20,5 +20,5 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["./src", "vite-env.d.ts", "src/**/*"]
+  "include": ["./src", "vite-env.d.ts", "src/**/*", "excel-utils-bt"]
 }
