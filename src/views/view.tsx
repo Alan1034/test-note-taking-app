@@ -1,141 +1,53 @@
-import React from "react";
-import type { note, notes } from "@/types/types";
+/*
+ * @Author: 陈德立*******419287484@qq.com
+ * @Date: 2023-10-11 22:58:57
+ * @LastEditTime: 2023-10-12 23:38:51
+ * @LastEditors: 陈德立*******419287484@qq.com
+ * @Github: https://github.com/Alan1034
+ * @Description: 
+ * @FilePath: \note-taking-app\src\views\view.tsx
+ * 
+ */
+import React, { useEffect, useState } from "react";
+import NotesItem from "./components/list-item";
+import type { note, notes, handlers } from "@/types/types";
+import NotesAPI from "@/api";
+import { ExcelUtils } from 'excel-utils-bt'
 interface NotesViewProps {
-  handlers: {
-    onNoteAdd: Function
-  }
+  handlers: handlers
   notes: notes
   activeNote?: note
 }
-export default function NotesView({ handlers: {
-  onNoteAdd
-}, notes, activeNote }: NotesViewProps) {
-  console.log(notes)
-  console.log(activeNote)
+export default function NotesView({ handlers, notes, activeNote }: NotesViewProps) {
+  const { onNoteAdd } = handlers
   return (
     <div>
       <div className="notes__sidebar">
         <button className="notes__add" type="button" onClick={
           () => onNoteAdd()
         }>添加新的笔记 📒</button>
-        <div className="notes__list"></div>
+        <button className="notes__add" type="button" onClick={
+          () => {
+            // 1、新建一个 实例
+            let el = new ExcelUtils('采购-拣货单')
+            // 2、调用实例函数，向实例添加表和数据
+            const notes = NotesAPI.getAllNotes();
+            console.log(notes)
+            const data: any[] = [...notes]
+            el.addJsonToSheet('采购-拣货单', data)
+            // 3、调用导出函数
+            //  exportExcel()函数为异步调用，可用 el.exportExcel().then(res => {}).catch(err => {})
+            el.exportExcel()
+          }
+        }>导出 📒</button>
+        导入需要用到nodejs的XLSX插件，我实现过，可以提供源码，因为涉及到服务端不方便展示
       </div>
       {
-        notes.length > 0 ? [] : <div className="notes__preview">
-          <input className="notes__title" type="text" placeholder="新笔记..." />
-          <textarea className="notes__body" defaultValue="编辑笔记..."></textarea>
-        </div>
+        notes.length > 0 ? notes.map((item: note) =>
+          <NotesItem key={`${item.id}`} active={activeNote && (activeNote.id === item.id)}
+            note={item} handlers={handlers} />) : []
       }
 
     </div>
   );
 }
-
-{/* export default class NotesView {
-  constructor(
-    root,
-    { onNoteSelect, onNoteAdd, onNoteEdit, onNoteDelete } = {}
-  ) {
-    this.root = root;
-    this.onNoteSelect = onNoteSelect;
-    this.onNoteAdd = onNoteAdd;
-    this.onNoteEdit = onNoteEdit;
-    this.onNoteDelete = onNoteDelete;
-    this.root.innerHTML = `
-         
-      `;
-
-    const btnAddNote = root.querySelector(".notes__add");
-    const inpTitle = root.querySelector(".notes__title");
-    const inpBody = root.querySelector(".notes__body");
-
-    btnAddNote.addEventListener("click", () => {
-      this.onNoteAdd();
-    });
-
-    [inpTitle, inpBody].forEach((inputField) => {
-      inputField.addEventListener("blur", () => {
-        const updatedTitle = inpTitle.value.trim();
-        const updatedBody = inpBody.value.trim();
-
-        this.onNoteEdit(updatedTitle, updatedBody);
-      });
-    });
-
-    this.updateNotePreviewVisibility(false);
-  }
-
-  _createListItemHTML(id, title, body, updated) {
-
-
-    return `
-          <div class="notes__list-item" data-note-id="${id}">
-              <div class="notes__small-title">${title}</div>
-              <div class="notes__small-body">
-                  ${body.substring(0, MAX_BODY_LENGTH)}
-                  ${body.length > MAX_BODY_LENGTH ? "..." : ""}
-              </div>
-              <div class="notes__small-updated">
-                  ${updated.toLocaleString(undefined, {
-      dateStyle: "full",
-      timeStyle: "short",
-    })}
-              </div>
-          </div>
-      `;
-  }
-
-  updateNoteList(notes) {
-    const notesListContainer = this.root.querySelector(".notes__list");
-
-    // Empty list
-    notesListContainer.innerHTML = "";
-
-    for (const note of notes) {
-      const html = this._createListItemHTML(
-        note.id,
-        note.title,
-        note.body,
-        new Date(note.updated)
-      );
-
-      notesListContainer.insertAdjacentHTML("beforeend", html);
-    }
-
-    // Add select/delete events for each list item
-    notesListContainer
-      .querySelectorAll(".notes__list-item")
-      .forEach((noteListItem) => {
-        noteListItem.addEventListener("click", () => {
-          this.onNoteSelect(noteListItem.dataset.noteId);
-        });
-
-        noteListItem.addEventListener("dblclick", () => {
-          const doDelete = confirm("确认要删除该笔记吗?");
-
-          if (doDelete) {
-            this.onNoteDelete(noteListItem.dataset.noteId);
-          }
-        });
-      });
-  }
-
-  updateActiveNote(note) {
-    this.root.querySelector(".notes__title").value = note.title;
-    this.root.querySelector(".notes__body").value = note.body;
-
-    this.root.querySelectorAll(".notes__list-item").forEach((noteListItem) => {
-      noteListItem.classList.remove("notes__list-item--selected");
-    });
-
-    this.root
-      .querySelector(`.notes__list-item[data-note-id="${note.id}"]`)
-      .classList.add("notes__list-item--selected");
-  }
-
-  updateNotePreviewVisibility(visible) {
-    this.root.querySelector(".notes__preview").style.visibility = visible
-      ? "visible"
-      : "hidden";
-  }
-} */}

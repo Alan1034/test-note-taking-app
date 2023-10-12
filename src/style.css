@@ -1,3 +1,5 @@
+/** @format */
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -104,5 +106,6 @@ body {
   font-size: 1.2em;
   line-height: 1.5;
   margin-top: 2em;
+  margin-bottom: 2em;
   resize: none;
 }

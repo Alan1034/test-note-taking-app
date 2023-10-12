@@ -2,7 +2,11 @@ import NotesView from "./views/view";
 import NotesAPI from "./api";
 import React, { useEffect, useState } from 'react';
 import type { noteId, note, notes, title, body } from "@/types/types";
-
+declare global {
+  interface Window {
+    EventUtil: any,
+  }
+}
 const App: React.FC = () => {
   useEffect(() => {
     _refreshNotes();
@@ -26,6 +30,7 @@ const App: React.FC = () => {
   }
 
   const _setActiveNote = (note: note) => {
+    console.log("setActiveNote")
     setActiveNote(note);
     // this.view.updateActiveNote(note);
   }
@@ -55,12 +60,14 @@ const App: React.FC = () => {
           body,
         });
       }
-
       _refreshNotes();
     },
     onNoteDelete: (noteId: noteId) => {
       NotesAPI.deleteNote(noteId);
       _refreshNotes();
+    },
+    onNoteUnactive: () => {
+      setActiveNote(undefined)
     },
 
   }
