@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import type { note, handlers, title, updated, body } from "@/types/types";
+import type { note, handlers, title} from "@/types/types";
 import "./list-item.less"
 interface NotesItemProps {
   handlers: handlers
